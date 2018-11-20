@@ -33,10 +33,6 @@ public:
     return (*(this->children))[i];
   }
 
-  /*
-   * Return a pointer to the child which contains the character as its val,
-   * or else return NULL if such child doesn't exist.
-   */
   StrSearchTree* findChild(char c){
     for(int i = 0; i < this->children->size(); i++){
       StrSearchTree* child = this->getChildByIndex(i);
@@ -48,11 +44,6 @@ public:
   }
 };
 
-/**
- *  Arguments:
- *  searchTree (StrSearchTree*) -- search tree to which to add the word
- *  word (string) -- word to add.  If empty, sets isEnd to true and returns
- */
 void processWord(StrSearchTree* searchTree, string word){
   if (word.length() == 0) {
     searchTree->isEnd = true;
@@ -68,13 +59,6 @@ void processWord(StrSearchTree* searchTree, string word){
   processWord(theChild, rest);
 }
 
-/**
- * Arguments:
- * words (vector<string>*) -- words to make into a search tree
- *
- * Returns:
- * tree (StrSearchTree*) -- search tree with all passed words
- */
 StrSearchTree* constructTree(vector<string>* words) {
   StrSearchTree* searchTree = new StrSearchTree();
   for(int i = 0; i < words->size(); i++){
@@ -83,13 +67,15 @@ StrSearchTree* constructTree(vector<string>* words) {
   return searchTree;
 }
 
-/**
+
+
+/*
  *  List of flags.  memoizedFlags[i] is false if we haven't yet memoized that
  *  index, and true if we have.
  */
 bool* memoizedFlags;
 
-/**
+/*
  *  Memoization table.  partialSplits[i] gives a sentence split starting at
  *  position i or NULL if it is impossible.  partialSplits[i] is undefined
  *  if memoizedFlags[i] == false
