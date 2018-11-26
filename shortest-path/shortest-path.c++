@@ -174,9 +174,7 @@ public:
     int i = 0;
     SearchQueue* queue = new SearchQueue();
     Square* startSquare = this->at(start);
-    cout << "We made it past array passing.\n";
     startSquare->pathDist = 0;
-    cout << "start square is " << startSquare->toString();
     queue->enqueue(startSquare);
     while(!(this->at(end)->visited) && !queue->isEmpty()){
       cout << "step " << (i++) << ":\n" << this->toString() << '\n';
