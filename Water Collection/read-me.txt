@@ -1,0 +1,68 @@
+You are given an array of non-negative integers that represents a two-dimensional elevation 
+map where each element is unit-width wall and the integer is the height. Suppose it will 
+rain and all spots between two walls get filled up.
+
+Compute how many units of water remain trapped on the map in O(N) time and O(1) space.
+
+For example, given the input [2, 1, 2], we can hold 1 unit of water in the middle.
+
+Given the input [3, 0, 1, 3, 0, 5], we can hold 3 units in the first index, 2 in the second, 
+and 3 in the fourth index (we cannot hold 5 since it would run off to the left), so we can 
+trap 8 units of water.
+
+
+Solution:
+
+See water.c++ for a solution.  (No command line input, the example is in the main() function.)
+
+A naive algorithm which would use O(N) space would be to do a forward pass storing the MAX_LEFT
+(highest elevation to left), then do a backward pass storing MAX_RIGHT (highest elevation to right)
+for each location.  Then we could sum over indices (where E[i] is elevation at position i.
+
+sum over i:
+  min(MAX_LEFT[i], MAX_RIGHT[i]) - E[i]
+ 
+However, the MAX_LEFT and MAX_RIGHT arrays require O(N) space.  So we have to get clever.
+Consider the example:
+
+0 1 2 3 2 1 0 4 1 2 0
+
+We can visualize like this:
+
+              -
+      -       - 
+    - - -     -   -
+  - - - - -   - - -
+- - - - - - - - - - -
+
+In a forward pass, we can label all water which will "run off to the left" with an "L"
+and all water that will get "stopped by a wall on the left" with an "X"
+
+L L L L L L L - X X X
+L L L - X X X - X X X
+L L - - - X X - X - X
+L - - - - - X - - - X
+- - - - - - - - - - -
+
+Notice how many of the X's represent water that will not, in fact, be trapped.  That's
+okay.  We will account for them in the backward pass.  We do the same thing using an
+"R" for water that will run-off to the right and "X" for water that will be trapped by a wall
+to the right.  
+
+X X X X X X X - R R R
+X X X - X X X - R R R
+X X - - - X X - X - R
+X - - - - - X - - - R
+- - - - - - - - - - -
+
+Now look what has happened: every square of empty space that is "trapped on both sides" is
+marked by an X on both passes.  Whereas, water that is "trapped only on one side" is marked
+with an L or R on one pass, but with an X on the other.  It is impossible for water to be 
+marked with an L and an R.  
+
+Thus, if during the forward pass we count X's as a score of +1 and L's and R's as scores of
+-1, then at the end of the day, any "one-side run-off" squares will be scored a total of zero,
+any any squares where water is actually trapped will be scored with a total of 2.  
+
+So let's track the score, and at the end we'll divide by 2.  This works.  Since we can track
+the score and don't need to remember these X's, L's, R's, this is O(1) space as required. 
