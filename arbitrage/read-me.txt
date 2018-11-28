@@ -1,0 +1,13 @@
+Suppose you are given a table of currency exchange rates, represented as a 2D array. 
+Determine whether there is a possible arbitrage: that is, whether there is some 
+sequence of trades you can make, starting with some amount A of any currency, so 
+that you can end up with some amount greater than A of that currency.
+
+There are no transaction costs and you can trade fractional quantities.
+
+Solution:
+
+Implemented in arbitrage.c++, in the function existsArbitrage().  The problem
+is equivalent to finding a cycle of negative net weight after applying the
+negative logarithm to the exchange rates.  Examples are in the main()
+function, of both an arbitrage and non-arbitrage exchange table.  
