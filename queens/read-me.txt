@@ -1,0 +1,19 @@
+You have an N by N board. Write a function that, given N, returns the number of 
+possible arrangements of the board where N queens can be placed on the board 
+without threatening each other, i.e. no two queens share the same row, column, 
+or diagonal.
+
+Solution: We will work our way across the board from left to right.  Every time 
+we place a queen, we create a node in a search tree, then recursively work
+down the tree.  Throughout, we implement pruning, so that a branch "dies" if all
+of its children are dead.  We say that a node is dead if there are no valid 
+queen arrangements in the subsequent columns given the queens that have already been
+placed.  
+
+Once we recursively call growValidBranches(), the tree is complete, and we can count
+the number of leaves in the tree, returning this as our answer.  The function
+
+int calculateArrangements(int n) {...}
+
+implements this solution, together with the data structure class SearchTree, all of which
+are contained in the file queens.c++.  
