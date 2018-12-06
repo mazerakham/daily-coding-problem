@@ -17,3 +17,40 @@ int calculateArrangements(int n) {...}
 
 implements this solution, together with the data structure class SearchTree, all of which
 are contained in the file queens.c++.  
+
+Sample outputs:
+
+>>queens 3
+The number of arrangements on a board of size 3 is 0
+>>queens 4
+The number of arrangements on a board of size 4 is 2
+>>queens 8
+The number of arrangements on a board of size 8 is 92
+>>queens 12
+The number of arrangements on a board of size 12 is 14200
+
+It is clear that the pruning is doing the job of shortening the run-time.  The latter 
+test runs in a second or two.  On the other hand,
+
+>>queens 13
+The number of arrangements on a board of size 13 is 73712
+
+took about 15 seconds to run.  To get a sense for the trend, I wrote a script
+to run the program and print the actual runtimes.  See queens_runtimes_tester.c++,
+which generated the runtimes in runtimes.txt:
+
+0.041
+0.04
+0.042
+0.04
+0.042
+0.046
+0.062
+0.141
+0.576
+2.929
+16.668
+
+Plotting the logarithms of these in Mathematica reveals that we are dealing with super-exponential growth,
+possibly even factorial growth.  But this seems to be in the nature of the problem, not a problem with the 
+algorithm.  
